@@ -703,7 +703,7 @@ bool CameraPub::updateCamera()
   double cx = info->P[2];
   double cy = info->P[6];
 
-  double far_plane = 100;
+  double far_plane = 300;
   double near_plane = near_clip_distance;
 
   Ogre::Matrix4 proj_matrix;
