@@ -33,7 +33,7 @@ class CamerasFrameManager():
         rospy.loginfo(args.dataset_type)
         rospy.loginfo(args.dataset_tag)
 
-        self.rate = rospy.Rate(10.0)
+        self.rate = rospy.Rate(50.0)
 
         with open(args.settings_path + "/dataset_settings.json") as f:
             self.camera_settings = json.load(f)[args.dataset_type][args.dataset_tag]["cameras"]
@@ -61,7 +61,7 @@ class CamerasFrameManager():
         quaternion4 = quaternion_multiply(quaternion1, quaternion2)
         quaternion3 = tf.transformations.quaternion_from_euler(0, 0, math.radians(90))
         quaternion = quaternion_multiply(quaternion4, quaternion3)
-        
+
         transform.transform.rotation.x = quaternion[0]
         transform.transform.rotation.y = quaternion[1]
         transform.transform.rotation.z = quaternion[2]
@@ -71,7 +71,7 @@ class CamerasFrameManager():
         time.sleep(1)
 
     def publish_obli_keyframe(self):
-        
+
         brs = tf2_ros.StaticTransformBroadcaster()
         transform = geometry_msgs.msg.TransformStamped()
         transform.header.stamp = rospy.Time.now()
@@ -96,17 +96,17 @@ class CamerasFrameManager():
         quaternion4 = quaternion_multiply(quaternion1, quaternion2)
         quaternion3 = tf.transformations.quaternion_from_euler(0, 0, math.radians(90))
         quaternion = quaternion_multiply(quaternion4, quaternion3)
-        
+
         transform.transform.rotation.x = quaternion[0]
         transform.transform.rotation.y = quaternion[1]
         transform.transform.rotation.z = quaternion[2]
         transform.transform.rotation.w = quaternion[3]
-        
+
         brs.sendTransform(transform)
         self.rate.sleep()
 
     def publish_rotary_keyframe(self):
-        
+
         camera_settings = self.camera_settings["rotary"]
         br = tf2_ros.TransformBroadcaster()
 

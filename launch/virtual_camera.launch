@@ -1,15 +1,10 @@
 <?xml version="1.0"?>
 <launch>
-  <arg name="sim"/>
-
   <arg name="use_rviz" default="true" />
-  <arg name="camera_rotary" default="false" />
+  <arg name="camera_rotary" default="true" />
   <arg name="camera_top" default="false" />
   <arg name="camera_obli" default="false" />
-  <arg name="log_path" default="" />
-  <arg name="settings_path" default="" />
-  <arg name="dataset_type" default="" />
-  <arg name="dataset_tag" default="" />
+  <arg name="log_path" default="$(find rviz_camera_stream)" />
 
   <!--launch rviz with config/rviz_camera_stream.rviz -->
   <node pkg="rviz" type="rviz" name="rviz"
@@ -17,17 +12,16 @@
       output="screen"
       if="$(arg use_rviz)" />
 
-
   <group if="$(arg camera_rotary)">
     <group ns="camera_rotary">
     <node name="camera_info" pkg="rostopic" type="rostopic"
         args="pub camera_info sensor_msgs/CameraInfo
       '{header: {seq: 0, stamp: {secs: 0, nsecs: 0}, frame_id: 'camera_rotary'},
-        height: 1440, width: 2560, distortion_model: 'plumb_bob',
+        height: 1080, width: 1920, distortion_model: 'plumb_bob',
         D: [0],
-        K: [1500.0, 0.0, 1280, 0.0, 1500.0, 720.0, 0.0, 0.0, 1.0],
+        K: [1500.0, 0.0, 960, 0.0, 1500.0, 540, 0.0, 0.0, 1.0],
         R: [1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0],
-        P: [1500.0, 0.0, 1280, 0.0, 0.0, 1500, 720, 0.0, 0.0, 0.0, 1.0, 0.0],
+        P: [1500.0, 0.0, 960, 0.0, 0.0, 1500, 540, 0.0, 0.0, 0.0, 1.0, 0.0],
         binning_x: 0, binning_y: 0,
         roi: {x_offset: 0, y_offset: 0, height: 1440, width: 2560, do_rectify: false}}' -r 2"
         output="screen"/>
@@ -96,14 +90,7 @@
 
   </group>
 
-  <include file="$(find rviz_camera_stream)/launch/rotate_virtual_camera.launch">
-    <arg name="settings_path" value="$(arg settings_path)" />
-    <arg name="dataset_type" value="$(arg dataset_type)" />
-    <arg name="dataset_tag" value="$(arg dataset_tag)" />
-  </include>
-
-  <include file="$(find rviz_camera_stream)/launch/s_graph_tf.launch">
-    <arg name="sim" value="$(arg sim)" />
-  </include>
+  <include file="$(find rviz_camera_stream)/launch/rotate_virtual_camera.launch"/>
+  <include file="$(find rviz_camera_stream)/launch/s_graph_tf.launch"/>
 
 </launch>

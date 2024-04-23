@@ -1,13 +1,7 @@
 <?xml version="1.0"?>
 
 <launch>
-    <arg name="sim"/>
-	
-    <!-- <group if="$(eval arg('sim') == true)">
-        <param name="use_sim_time" value="true" />
-    </group> -->
     <param name="use_sim_time" value="true" />
-
     <node pkg="tf" type="static_transform_publisher" name="map_to_keyframes" args="0 0 7 0 0 0 map keyframes_layer 10" />
     <node pkg="tf" type="static_transform_publisher" name="keyframe_to_wall" args="0 0 4 0 0 0 keyframes_layer walls_layer 10" />
     <node pkg="tf" type="static_transform_publisher" name="keyframe_to_wall_semantic" args="0 0 8 0 0 0 keyframes_layer wall_semantic_layer 10" />

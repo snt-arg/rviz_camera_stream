@@ -2,14 +2,12 @@
 <launch>
 
 
-	<arg name="settings_path" default="/home/adminpc/reasoning_ws/src/graph_experiments/graph_experiments/BT/config" />
-	<arg name="dataset_type" default="sim" />
+	<arg name="settings_path" default="$(find rviz_camera_stream)/config" />
+	<arg name="dataset_type" default="real" />
 	<arg name="dataset_tag" default="C1F1" />
-		
+
 	<param name="use_sim_time" value="true" />
+	<node name="virtual_camera_spin" pkg="rviz_camera_stream" type="virtual_camera_spin.py" output="screen" args="-settings_path $(arg settings_path) -dataset_type $(arg dataset_type) -dataset_tag $(arg dataset_tag)"/>
 
-
-	  <node name="virtual_camera_spin" pkg="rviz_camera_stream" type="virtual_camera_spin.py" output="screen" args="-settings_path $(arg settings_path) -dataset_type $(arg dataset_type) -dataset_tag $(arg dataset_tag)"/>
-	  
 
 </launch>
